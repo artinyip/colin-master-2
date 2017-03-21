@@ -1,0 +1,16 @@
+gunicorn
+django==1.9.8
+django-widget-tweaks
+whitenoise
+pillow
+dj-database-url
+psycopg2
+django-address
+django-dynamic-formsets
+django-countries
+django-phonenumber-field
+django-parsley
+django-storages
+boto
+django-autofixture
+djangorestframework

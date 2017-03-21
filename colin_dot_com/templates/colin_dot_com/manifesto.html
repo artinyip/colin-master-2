@@ -1,0 +1,83 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% block navigation %}
+    <ul class="breadcrumbs">
+      <li><a href="/">home</a></li>
+      <li><a href="/companies">companies</a> </li>
+      <li><a class="current" href="/companies/{{ company.id }}">{{ company.name }}</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+        <div class="rowset">
+            <div class="row">
+               <div class="small-12 large-12 columns manifesto">
+                   
+                        <h1>Hello, I'm <span class="highlight">Colin</span> —
+                        <br>the guy who knows a guy.</h1>
+                  
+
+                    <div class="row">
+                        <div class="small-12 large-5 columns manifesto">
+                            <h2>For the manufacturer.</h2>
+                            <p>
+                                A free easy-to-maintain profile, with a simple image upload feature to showcase the services and breadth of completed projects. The visual way to be discovered.
+                            </p>
+                        </div>
+                         <div class="small-12 large-5 columns end manifesto">
+                            <h2>For the designer.</h2>
+                            <p>
+                                The quickest and easiest way to find the right manufacturer or vendor for your project. Search a visual database of completed projects and the manufacturers who produced them.
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    <div class="small-12 large-12 columns manifesto">
+                            <h2>Our Manifesto &#8212</h2>
+                            <p>
+                    </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="small-12 large-5 columns manifesto">
+                            <h2>Accessible.</h2>
+                            <p>
+								Whether you're an emerging designer or an agency who needs something made in a pinch &#8212 manufacturing should be easy and accessible, not intimidating. Colin is here to guide & introduce you to the right people to get you started.
+							</p>
+                        </div>
+                        <div class="small-12 large-5 columns end manifesto">
+                            <h2>Efficient.</h2>
+                            <p>
+								We get it, sometimes you spend more time searching for the right manufacturer than you spend designing. Our visual database of verified vendors will save you time when looking for a vendor that fits your needs.
+							</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 large-5 columns manifesto">
+                            <h2>Transparent.</h2>
+                            <p>
+								We encourage designers to share projects they've created with their favorite vendors as a way to build a comprehensive database of great manufacturers every designer can rely on, whenever they need it.
+							</p>
+                        </div>
+                         <div class="small-12 large-5 columns end manifesto">
+                            <h2>Curated.</h2>
+                            <p>
+								When we used to look for manufacturers in the Yellow Pages, it was pretty much a shot in the dark. With our vetted database, you know you're in good hands when you connect with a vendor. 
+							</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    	 <div class="small-12 large-5 columns manifesto">
+                    	     <h2>Who is Colin?</h2>
+                    	     <p>You know that guy in your neighborhood who's always hanging out in his garage? Well Colin is your know-it-all neighbor who 'knows a guy' for anything you need made. He also knows a thing or two about manufacturing techniques. His interests include classic rock and telling dad jokes.
+                    	     </p>
+                    	</div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+{% endblock %}

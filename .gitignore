@@ -1,0 +1,25 @@
+
+*.pyc
+
+*.log
+
+.idea/*
+
+colin/.idea/*
+
+*.sqlite3
+
+colin_dot_com/static/colin_dot_com/bower_components/*
+
+.DS_Store
+
+colin copy/*
+
+colin/staticfiles/*
+
+colin/media/*
+
+colin/staticfiles/media/*
+!colin/staticfiles/media/giphy.gif
+
+get-pip.py

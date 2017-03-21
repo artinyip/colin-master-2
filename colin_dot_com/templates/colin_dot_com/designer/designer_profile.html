@@ -1,0 +1,93 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load thumbnail %}
+
+{% block top-alert %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="designer_profile rowset">
+        <!-- <div class="row">
+                    <div class="small-12 large-10 columns">
+                        <div class="intro">
+                            {% if user.first_name %}
+                                {{ user.first_name }},
+                            {% else %}
+                                Hello,
+                            {% endif %} I'd like you to meet <span class="highlight">{{ company.name }}</span></div>
+                    </div>
+                  {%  if company.logo %}
+                        <div class="small-6 large-2 columns">
+                            <img src="{{ MEDIA_URL }}/{{ company.logo }}">
+                        </div>
+                    {% endif %}
+                </div> -->
+        <div class="row">
+            <div class="blurb large-10 large-centered columns">
+                <div class="designer row">
+                    <div class="large-4 columns">
+                        <img class="avatar" src="{{ designer.avatar|thumbnail_url:'big_avatar' }}">
+                    </div>
+                    <div class="designer_info small-12 large-8 columns">
+                        <h1>{{ designer.user.first_name }} {{ designer.user.last_name }}</h1>
+                        <div class="stats">
+                            <div>
+                                <span class="position">{{ designer.position }}</span> &bull; <span
+                                    class="firm">{{ designer.firm }}</span>
+                            </div>
+                            <div>
+                                {% for interest in designer.interest %}
+                                    <span class="material">{{ interest }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="address">
+                                <a class="editable" data-name="city" data-type="text" data-pk="{{ designer.id }}"
+                                   data-url="/update_company_field/" data-title="Your city">{{ designer.city }}</a>,
+                                <a class="editable" data-name="state" data-type="text" data-pk="{{ designer.id }}"
+                                   data-url="/update_company_field/" data-maxlength="2">{{ designer.state }}</a>
+                            </div>
+                            </di>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            Dropzone.options.moreImages = {
+                paramName: "image", // The name that will be used to transfer the file
+                maxFilesize: 5, // MB
+            };
+
+            $(document).on('ready', function () {
+
+                {#                if ({{ edit_mode|lower }}) {#}
+                {#                    var materials = JSON.parse('{{ materials|safe}}');#}
+                {#                    console.log(materials);#}
+                {#                    $.fn.editable.defaults.mode = 'inline';#}
+                {#                    $.fn.editable.defaults.showbuttons = false;#}
+                {#                    $('.editable').editable();#}
+                {#                    $('#material_focus').editable({#}
+                {#                        source: materials,#}
+                {#                        value: "{{ company.material_focus }}",#}
+                {#                        'data-url': "/update_company/"#}
+                {#                    });#}
+                {#                }#}
+                {#                else {#}
+                {#                    $('a.editable').css('cursor', 'arrow');#}
+                {#                    $('a#material_select').css('cursor', 'arrow');#}
+                {#                }#}
+
+
+
+            });
+        });
+
+    </script>
+{% endblock %}

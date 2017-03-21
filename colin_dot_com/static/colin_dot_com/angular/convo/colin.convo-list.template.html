@@ -1,0 +1,18 @@
+<div class="convo_list">
+
+    <div class="convo" ng-repeat="convo in $ctrl.items" ng-class="{'selected': $ctrl.is_selected(convo.thread_id)}" ng-click="$ctrl.set_selected(convo)">
+        <div class="avatar" ng-if="convo.avatar" style="background-image:url('{{ convo.avatar }}');"></div>
+        <div class="avatar default" ng-if="!convo.avatar"></div>
+        <div class="convo_friend">
+            {{ convo.friend_name }}
+        </div>
+        <div class="convo_subject">
+            {{ convo.subject }}
+        </div>
+        <div class="convo_body">
+            {{ convo.body|limitTo:100 }} <span class="convo_date">{{ convo.date_sent }}</span>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+
+</div>

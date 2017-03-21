@@ -1,0 +1,13 @@
+<div class="gallery angular search-results">
+    <div class="" ng-repeat="company in $ctrl.results">
+        <div ng-if="$ctrl.get_image(company)">
+            <a class="company_link" href="/companies/{{ company.fields.user }}">
+                <img src="{{ $ctrl.get_image(company) }}">
+                <div class="company_info">
+                    <div class="company_name">{{ company.fields.name }}</div>
+                    <div class="company_location">{{ company.fields.city }}, {{company.fields.state}}</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

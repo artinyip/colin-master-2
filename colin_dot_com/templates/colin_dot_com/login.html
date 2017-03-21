@@ -1,0 +1,46 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <body class="login-bg">
+
+    <div class="rowset">
+        <div class="row">
+            <div class="colin_form">
+                <div class="small-11 large-5 columns colin_form">
+                    {% if next %}
+                        <h1>One sec.</h1>
+                        <h3>We need to get you logged in before you can do that.</h3>
+
+                    {% else %}
+                        <h1>Welcome back.</h1>
+                        <h3>If you don't have an account, you can sign up for an invite to join.</h3>
+                    {% endif %}
+                    {% if form.errors %}
+                        <div class="callout alert small">
+                            {% if form.errors %}
+                                <p>Oops! Your username or password was incorrect.</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="small-11 large-5 columns colin_form end">
+                    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                        {% csrf_token %}
+
+                        {% render_field form.username placeholder=form.username.label %}
+                        {{ form.username.errors }}
+
+                        {% render_field form.password placeholder=form.password.label %}
+                        {{ form.password.errors }}
+
+                        <input type="submit" class="button fill_width" value="Login"/>
+                        <input type="hidden" name="next"
+                               value="{% if next %}{{ next }}{% else %}/dashboard{% endif %}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

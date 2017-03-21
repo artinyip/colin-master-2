@@ -1,0 +1,55 @@
+<div ng-if="$ctrl.items.length > 0" class="convo_compose">
+    <div class="row">
+        <div class="small-10 columns">
+            <input ng-model="$ctrl.subject" type="text" placeholder="Subject (Optional)">
+            <textarea ng-model="$ctrl.body" type="text" rows="6" placeholder="Body"></textarea>
+            <div id="convo_dropzone" ng-class="{'expanded': $ctrl.expanded}">
+                <div dropzone ng-config="images.config" ng-csrftokenname="csrfmiddlewaretoken"
+                     ng-csrftoken="$ctrl.csrftoken" class="dropzone">
+
+                </div>
+            </div>
+        </div>
+        <div class="small-2 columns">
+            <a class="button convo_button" ng-click="$ctrl.sendMessage()">Send</a>
+            <a class="button convo_button" ng-click="$ctrl.toggle()">Add files</a>
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.items.length === 0">
+    You haven't sent any messages yet. <a href="/explore">Explore our manufacturers' work</a> to get started.
+</div>
+<div class="conversation">
+    <div ng-repeat="msg in $ctrl.items track by msg.id">
+
+        <div class="convo_item {{ msg.direction }}" ng-class="{'unread': !msg.read}" in-view="$ctrl.read($inview, msg, 3000)" >
+            <div class="convo_item_header">
+                <div class="date">
+                    {{ msg.date_sent | date:'MMMM d, yyyy'}} <span class="time">{{ msg.date_sent | date:'hh:mm a' }}</span>
+                </div>
+                <div class="friend">
+                    <a href="{{ msg.link }}">{{ msg.sender_name }}</a>
+                </div>
+                <div class="subject">
+                    {{ msg.subject }}
+                </div>
+            </div>
+            <div class="body">
+                <span class="body_text">{{ msg.body }}</span>
+                <div class="attachments" ng-repeat="att in msg.attachments">
+                    <div ng-if="att.file">
+                        <img src="{{ att.file }}">
+                        <div class="attachment_caption"> {{ getFileName(att.file) }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <a href="{{ msg.link }}" ng-if="msg.avatar" ng-mouseover="$ctrl.read(true, msg, 0)" ng-class="{'unread': !msg.read}" class="avatar {{ msg.direction }}"
+           style="background-image:url('{{ msg.avatar }}')"></a>
+        <a href="{{ msg.link }}" ng-if="!msg.avatar" ng-mouseover="$ctrl.read(true, msg, 0)" ng-class="{'unread': !msg.read}"
+           class="avatar {{ msg.direction }} default"></a>
+
+        <div style="clear:both"></div>
+    </div>
+</div>

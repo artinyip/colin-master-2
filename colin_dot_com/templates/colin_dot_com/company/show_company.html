@@ -1,0 +1,301 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load thumbnail %}
+
+{% block top-alert %}
+
+{% endblock %}
+
+{% block full-content %}
+    {% if company %}
+        <div class="profile-fixed">
+        {% if preview %}
+            <!-- note: use `.preview-mode` to style this -->
+            <div class="callout preview-mode">
+                Here's a preview of your profile page&mdash;we'll send you an email once the beta
+                launches.
+            </div>
+        {% endif %}
+        <div class="rowset profile-info">
+            <!-- <div class="row">
+                    <div class="small-12 large-10 columns">
+                        <div class="intro">
+                            {% if user.first_name %}
+                                {{ user.first_name }},
+                            {% else %}
+                                Hello,
+                            {% endif %} I'd like you to meet <span class="highlight">{{ company.name }}</span></div>
+                    </div>
+                  {%  if company.logo %}
+                        <div class="small-6 large-2 columns">
+                            <img src="{{ MEDIA_URL }}/{{ company.logo }}">
+                        </div>
+                    {% endif %}
+                </div> -->
+            <div class="row">
+                    <div class="company small-12 large-4 columns">
+                        <h1>Meet {{ company.name }}</h1>
+                    </div>
+                    <div class="company small-12 large-5 columns">
+                        <h3 class="blurb">
+                            <a class="editable" data-name="blurb" data-type="textarea" data-pk="{{ company.id }}"
+                               data-url="/update_company_field/" data-title="Enter a blurb">{{ company.blurb }}</a>
+                        </h3>
+
+                    </div>
+                    <div class="small-6 large-3 columns">
+                        <div class="material">
+                            <dt class="title">Expertise
+                            <dt>
+                            <dl class="detail">
+                                <a id="material_focus" data-type="select" data-pk="{{ company.id }}"
+                                   data-url="/update_company_field/"
+                                   data-title="Pick a material"> {{ company.get_material_focus_display }} </a>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="small-6 large-3 columns">
+                        <div class="address">
+                            <dt class="title">Location
+                            <dt>
+                            <dl class="detail">
+                                <a class="editable" data-name="address_line_1" data-type="text"
+                                   data-pk="{{ company.id }}" data-url="/update_company_field/"
+                                   data-title="Street address">{{ company.address_line_1 }}</a><br/>
+                                {% if company.address_line_2 %}
+                                    <a class="editable" data-name="address_line_2" data-type="text"
+                                       data-pk="{{ company.id }}" data-url="/update_company_field/"
+                                       data-title="Street address">{{ company.address_line_2 }}</a><br/>
+                                {% endif %}
+                                <a class="editable" data-name="city" data-type="text" data-pk="{{ company.id }}"
+                                   data-url="/update_company_field/" data-title="Your city">{{ company.city }}</a>,
+                                <a class="editable" data-name="state" data-type="text" data-pk="{{ company.id }}"
+                                   data-url="/update_company_field/" data-maxlength="2">{{ company.state }}</a>
+                            </dl>
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                {% if not edit_mode %}
+                    <div class="small-12 large-3 columns" style="float:right">
+                        <div class="message_me tab_option" data-open="send_message_modal">
+                            <div class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                            Send Message
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="small-12 large-3 columns right end" style="float:right">
+                        <div class="advanced-settings tab_option" data-open="advanced_settings_modal">
+                            <div class="icon"><i class="fa fa-cog" aria-hidden="true"></i></div>
+                            Account Settings
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="reveal" id="send_message_modal" data-reveal>
+            {{ new_message_template }}
+        </div>
+        <div class="reveal" id="advanced_settings_modal" data-reveal>
+            {{ advanced_settings_template }}
+        </div>
+
+        <div class="reveal" id="add_more_photos" data-reveal>
+            <form class="dropzone" id="moreImages" action="/add_photo/{{ company.id }}/">
+                {% csrf_token %}
+                <div class="fallback">
+                    <input name="photo" type="file" multiple/>
+                </div>
+            </form>
+            <div><a data-close class="button close_photos">Ok</a></div>
+
+
+        </div>
+        <div class="profile-gallery">
+            <div class="row">
+                <div class="small-12 large-3 columns-end">
+                    <div class="profile-metrics">
+                        {% if company.photo_set.count > 1 %}{{ company.photo_set.count }}
+                            Samples
+                        {% elif company.photo_seet.count == 1 %}
+                            1 Sample
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <photo-search-list company="{{ company.id }}" showDetails="false" lightbox="true"></photo-search-list>
+{#                <div class="gallery html">#}
+{#                    <div class="grid-sizer"></div>#}
+{#                    <div class="gutter-sizer"></div>#}
+{##}
+{#                    {% for photo in company.photo_set.all %}#}
+{##}
+{#                        {% if photo %}#}
+{#                            <div class="company">#}
+{#                                <a href="{{ MEDIA_URL }}{{ photo.image }}" data-lightbox="gal"#}
+{#                                   data-title="<div ng-controller='myCtrl' ng-app='myApp'><div ng-click='delete_photo()'>Delete</div></div>">#}
+{#                                    <img src="{{ photo.image|thumbnail_url:'medium'}}">#}
+{#                                    {% if edit_mode and photo == company.get_default_image %}#}
+{#                                        <div class="is_default company_image_label">Current default</div>#}
+{#                                    {% elif user.company == company %}#}
+{#                                        <a class="set_default company_image_label" photo_id="{{ photo.id }}">Make#}
+{#                                            default</a>#}
+{#                                    {% endif %}#}
+{#                                </a>#}
+{#                                    {% if edit_mode %}#}
+{#                                        <a class="tags_button" photo_id="{{ photo.id }}">#}
+{#                                            <i class="fa fa-tag" aria-hidden="true"></i>#}
+{#                                            <input type="text" value="{{ photo.tag.all|join:", " }}">#}
+{#                                        </a>#}
+{##}
+{#                                        <a class="delete_button" photo-id="{{ photo.id }}"><i class="fa fa-trash"#}
+{#                                                                                          aria-hidden="true"></i></a>#}
+{#                                        <div class="tags">#}
+{#                                            {{ photo.tag.all|join:" / " }}#}
+{#                                        </div>#}
+{#                                        <input type="text">#}
+{#                                    {% endif %}#}
+{#                            </div>#}
+                            {#                            <a class="company grid-item" data-open="image_reveal__{{ photo.id }}">#}
+                            {#                                <img src="{{ MEDIA_URL }}{{ photo.image }}">#}
+                            {#                            </a>#}
+                            {#                            <div class="reveal" id="image_reveal__{{ photo.id }}" data-reveal>#}
+                            {#                                <img src="{{ MEDIA_URL }}{{ photo.image }}">#}
+                            {#                                <button class="close-button" data-close aria-label="Close modal" type="button">#}
+                            {#                                    <span aria-hidden="true">&times;</span>#}
+                            {#                                </button>#}
+                            {#                            </div>#}
+{##}
+{#                        {% endif %}#}
+{##}
+{#                    {% endfor %}#}
+{#                    {% if edit_mode %}#}
+{#                        <a class="company grid-item" data-open="add_more_photos">#}
+{#                            <div class="add_photos">+</div>#}
+{#                        </a>#}
+{#                    {% endif %}#}
+{##}
+{#                </div>#}
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    {% endif %}
+
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $(".set_default").on('click', function () {
+                var id = $(this).attr("photo_id");
+                $.ajax({
+                    type: 'POST',
+                    url: "/set_default_image/" + id + "/",
+                    success: function (r) {
+                        console.log(r);
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            });
+
+
+            Dropzone.options.moreImages = {
+                paramName: "image", // The name that will be used to transfer the file
+                maxFilesize: 5, // MB
+            };
+
+            try {
+                $(".dropzone").dropzone();
+            }
+            catch(e) {
+                console.log("Dropzone is already attached.");
+            }
+
+            $(document).on('ready', function () {
+                resizeTop();
+
+                if ({{ edit_mode|lower }}) {
+                    var materials = JSON.parse('{{ materials|safe}}');
+                    console.log(materials);
+                    $.fn.editable.defaults.mode = 'inline';
+                    $.fn.editable.defaults.showbuttons = false;
+                    $('.editable').editable();
+                    $('#material_focus').editable({
+                        source: materials,
+                        value: "{{ company.material_focus }}",
+                        'data-url': "/update_company/"
+                    });
+                }
+                else {
+                    $('a.editable').css('cursor', 'arrow');
+                    $('a#material_select').css('cursor', 'arrow');
+                }
+
+                $(".tags_button").each(function() {
+                   var id = $(this).attr('photo_id');
+                   $(this).addClass("pid_" + id);
+                   var drop;
+                   drop = new Drop({
+                       target: document.querySelector('.tags_button' + ".pid_" + id),
+                       content: 'Welcome to the future!',
+                       position: 'top right',
+                       openOn: 'click',
+                       classes: 'drop-theme-arrows'
+                    });
+                });
+
+
+
+
+
+                $(".delete_button").on("click", function () {
+                    var r = confirm("Are you sure you want to delete this photo?");
+                    var id = $(this).attr("photo-id");
+                    if (r == true) {
+                        $.ajax({
+                            type: 'POST',
+                            url: "/delete_photo/" + id + "/",
+                            success: function (r) {
+
+                                location.reload();
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    } else {
+                        console.log("cancel");
+                    }
+                });
+            });
+
+            $(window).resize(function () {
+                resizeTop();
+            })
+
+            $(document).on("closed.zf.reveal", function (e) {
+                console.log(e.target);
+                if ($(e.target).attr("id") === "add_more_photos") {
+                    location.reload()
+                }
+
+            });
+
+
+            function resizeTop() {
+                var infoHeight = $(".profile-fixed").height();
+                var paddingTop = parseInt($(".profile-fixed").css('padding-top'));
+                var paddingBottom = parseInt($(".profile-fixed").css('padding-bottom'));
+                var top = infoHeight + paddingTop + paddingBottom + "px";
+                $(".profile-gallery").css('top', top);
+                $(".footer").css('top', top);
+            }
+        });
+
+    </script>
+{% endblock %}

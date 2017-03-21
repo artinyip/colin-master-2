@@ -1,0 +1,121 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load widget_tweaks %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+    <div class="rowset">
+        <div class="row">
+            {% if message_form.errors %}
+                <div class="small-10 large-6 large-centered small-centered columns">
+                    <div data-closable class="callout alert small">
+                        <h4>Error</h4>
+                        There was a problem signing you up!
+                        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="convo_controller ">
+            <div class="row">
+                <div class="large-4 small-12 columns">
+                        <div ng-view class="convo-list">
+                            <convo-list></convo-list>
+                        </div>
+                </div>
+                <div class="large-8 small-12 columns">
+                        <div ng-view class="convo_wrapper">
+                            <convo></convo>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="{% static "dynamic_formsets/jquery.formset.js" %}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $('.individual-form').formset(
+            {}
+        );
+    </script>
+
+
+
+    <script type="text/javascript">
+
+        $("tr").on('click', function () {
+            var id = $(this).attr('message_id');
+            window.location.href = '/messages/' + id;
+        })
+
+
+        $(document).ready(function () {
+            parseState();
+            $(window).on('popstate', function () {
+                parseState();
+            });
+        });
+
+        $('.individual-form input').on('ready', function () {
+            $(this).addClass("show-for-sr");
+        });
+        $('.individual-form label').on('ready', function () {
+            $(this).addClass("button");
+        });
+
+        function parseState() {
+            var state = window.location.hash;
+            console.log("switching to page state: [" + state + "]");
+            if (!window.history) {
+                state = "all";
+            }
+            switch (state) {
+                default:
+                case "#!page1":
+                    showPage1();
+                    break;
+                case "#!page2":
+                    showPage2();
+                    break;
+                case "#!page3":
+                    showPage3();
+                    break;
+                case "all":
+                    showAll();
+                    break;
+
+            }
+        }
+
+        function showPage1() {
+            $(".page_1").css('display', 'block');
+            $(".page_2").css('display', 'none');
+            $(".page_3").css('display', 'none');
+        }
+
+        function showPage2() {
+            $(".page_1").css('display', 'none');
+            $(".page_2").css('display', 'block');
+            $(".page_3").css('display', 'none');
+        }
+        function showPage3() {
+            $(".page_1").css('display', 'none');
+            $(".page_2").css('display', 'none');
+            $(".page_3").css('display', 'block');
+        }
+
+        function showAll() {
+            $(".page_1").css('display', 'block');
+            $(".page_2").css('display', 'block');
+            $(".signup_page2").css('display', 'none')
+        }
+
+
+    </script>
+{% endblock %}

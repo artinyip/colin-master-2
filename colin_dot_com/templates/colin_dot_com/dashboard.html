@@ -1,0 +1,31 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="rowset">
+        <div class="row">
+        	<div class="intro">
+         		<div class="company small-12 large-5 columns">
+        			<h1>Explore. Discover. Connect.</h1>
+        			
+        		</div>
+        		<div class="company small-12 large-6 columns end">
+        			<h3><strong>Hello {% if user.first_name %} {{ user.first_name }}{% elif user.company %} {{ user.company.name }}{% endif %}</strong>, this is where you can check out the latest work submitted by our growing community of manufacturers & vendors. Get inspired for your next project.
+        			</h3>
+        			
+        		</div>
+        	</div>
+            <!--<div class="small-12 large-centered small-centered columns">
+                <div class="intro">Hello {% if user.first_name %}<span class="highlight">{{ user.first_name }}</span>{% endif %},<br />
+                Check out some of the new projects
+                <br /> I think you might be interested in.</div> -->
+                <div ng-view class="search-list">
+                    <!-- <mfg-search-list></mfg-search-list> -->
+                    <photo-search-list details="true" paged="true"></photo-search-list>
+            	</div>
+                <div style="clear:both"></div>
+        </div>
+    </div>
+
+{% endblock %}

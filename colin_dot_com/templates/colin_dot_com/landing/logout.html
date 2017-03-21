@@ -1,0 +1,18 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load widget_tweaks %}
+
+{% load staticfiles %}
+
+{% block head %}
+    {{ company_form.media }}
+{% endblock %}
+
+{% block full-content %}
+    <body class="landing-bg">
+        <div class="callout preview-mode">
+            You're all logged out!
+        </div>
+        {% include "colin_dot_com/landing/landing.section.html" %}
+    </body>
+{% endblock %}

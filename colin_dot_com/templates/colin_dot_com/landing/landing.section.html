@@ -1,0 +1,102 @@
+
+
+    <div class="rowset">
+        <div class="row">
+            {% if user_form.errors or company_form.errors %}
+                <div class="small-10 large-5 large-centered small-centered columns">
+                    <div data-closable class="callout alert small">
+                        <h1>Error</h1>
+                        There was a problem signing you up!
+                        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="small-12 large-4 columns beta">
+                <h1>Hello, I'm Colin.
+                    <br>I'll help you find local<br>
+                    <div id="typed-strings">
+                        <p>woodworkers</p>
+                        <p>screenprinters</p>
+                        <p>garment makers</p>
+                        <p>metalsmiths</p>
+                        <p>glassblowers</p>
+                        <p>leatherworkers</p>
+                        <p>enamelers</p>
+                        <p>ceramicists</p>
+                        <p>3D printers</p>
+                        <p>CNC millers</p>
+                        <p>powder coaters</p>
+                        <p>mold makers</p>
+                        <p>jewelers</p>
+                        <p>machinists</p>
+                        <p>dye houses</p>
+
+                    </div>
+                    <span id="typed" style="white-space:pre;"></span>
+                    <br>for your next project.
+                </h1>
+               <hr style="margin-left:0px;text-align:left;width:10%;">
+                <h3>
+                    Search through a database of finished samples and the manufacturers who produced them. <b>Sign up,
+                    it's free!</b>
+                </h3>
+                {% if thanks %}
+                    <div class="alert">
+                        Thanks for signing up!
+                    </div>
+                {% else %}
+                    <form action="https://formspree.io/colinfind@gmail.com"
+                          method="POST">
+                        <input type="email" name="_replyto" class="email" id="email" placeholder="Email Address">
+                        <input type="submit" class="button fill_width" value="Request an invite">
+                        <input type="hidden" name="_next" value="http://www.hellocolin.com?thanks=True"/>
+                        <input type="hidden" name="_subject" value="Beta Signup"/>
+
+                    </form>
+                {% endif %}
+           </div>
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+        $(function () {
+
+            $("#typed").typed({
+                // strings: ["Ceramics", "It <em>types</em> out sentences.", "And then deletes them.", "Try it out!"],
+                stringsElement: $('#typed-strings'),
+                typeSpeed: 40,
+                backDelay: 700,
+                loop: true,
+                contentType: 'html', // or text
+                // defaults to false for infinite loop
+                loopCount: false,
+                callback: function () {
+                    foo();
+                },
+                resetCallback: function () {
+                    newTyped();
+                }
+            });
+
+            $(".reset").click(function () {
+                $("#typed").typed('reset');
+            });
+
+        });
+
+        function newTyped() { /* A new typed object */
+        }
+
+        function foo() {
+            console.log("Callback");
+        }
+
+    </script>

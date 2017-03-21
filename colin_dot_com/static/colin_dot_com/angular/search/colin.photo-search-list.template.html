@@ -1,0 +1,55 @@
+<!-- <div class="gallery-angular search-results">
+    <div class="grid-sizer"></div>
+    <div class="gutter-sizer"></div>
+    <div class="grid-item" ng-repeat="photo in $ctrl.results">
+        <div ng-if="$ctrl.get_image(photo)">
+            <a class="company_link" href="/companies/{{ photo.company.user }}">
+                <img src="{{ photo.image }}">
+                <div class="company_info">
+                    <div class="company_name">{{ photo.company.name }}</div>
+                    <div class="company_location">{{ photo.company.city }}, {{ photo.company.state}}</div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <p>
+            <a ng-click="$ctrl.getMore()">Get more</a>
+    </p>
+</div> -->
+
+<div masonry class="container" load-images="true">
+    <span ng-if="$ctrl.edit" class="masonry-brick" data-open="add_more_photos">
+        <div class="add_photos">+</div>
+    </span>
+    <span class="masonry-brick" ng-repeat="photo in $ctrl.results">
+        <span ng-if="$ctrl.get_image(photo)">
+            <a ng-if="!$ctrl.lightbox" class="company_link" href="/companies/{{ photo.company.id }}">
+                <img src="{{ photo.thumbnail }}">
+                <div ng-if="$ctrl.details" class="company_info">
+                    <div class="company_name">{{ photo.company.name }}</div>
+                    <div class="company_location">{{ photo.company.city }}, {{ photo.company.state }}</div>
+                </div>
+            </a>
+            <a ng-if="$ctrl.lightbox" href="{{ photo.image }}" data-lightbox="gal">
+                <img src="{{ photo.thumbnail }}">
+            </a>
+        </span>
+    </span>
+
+</div>
+
+<!-- {% if edit_mode and photo == company.get_default_image %}
+                    <div class="is_default company_image_label">Current default</div>
+                {% elif user.company == company %}
+                    <a class="set_default company_image_label" photo_id="{{ photo.id }}">Make
+                        default</a>
+                {% endif %} -->
+
+
+
+
+
+    <p ng-if="$ctrl.paged">
+        <a class="button fill_width get_more" ng-click="$ctrl.getMore()">Get more</a>
+    </p>

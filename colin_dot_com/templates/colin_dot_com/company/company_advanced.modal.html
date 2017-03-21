@@ -1,0 +1,69 @@
+{% extends "colin_dot_com/base_modal.html" %}
+
+{% block content %}
+    <div class="rowset">
+        <div class="row">
+            <div class="small-12 columns">
+                <h2>Account Settings</h2>
+                <ul class="tabs" data-tabs id="example-tabs">
+                    <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Company Info</a></li>
+                    <li class="tabs-title"><a href="#panel2">Account Info</a></li>
+                </ul>
+                <div class="tabs-content" data-tabs-content="example-tabs">
+                    <div class="tabs-panel is-active" id="panel1">
+                        <form method="post" action="/update_company/{{ company_form.id }}" data-parsley-validate
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ company_form.as_p }}
+                            <input type="hidden" name="pk" value="{{ company.id }}">
+                            <input type="submit" class="button fill_width" value="Save info"/>
+                            <input type="hidden" name="next" value="/dashboard/"/>
+                        </form>
+                    </div>
+                    <div class="tabs-panel" id="panel2">
+                        <ul>
+                            <a href="#" data-open="password_change_form" class="button fill_width">Change password</a></li>
+                            <a href="mailto:support@hellocolin.com" class="button fill_width">Contact support</a></li>
+                            <a href="#" user-id="{{ company.user.id }}" class="button fill_width">Deactivate account</a></li>
+                        </ul>
+                        <div class="reveal" id="password_change_form" data-reveal>
+
+                            <form method="post" action="/change_password/{{ company_form.id }}" data-parsley-validate
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ password_change_form.as_p }}
+                                <input type="hidden" name="pk" value="{{ company.id }}">
+                                <input type="submit" class="button fill_width" value="Save info"/>
+                                <input type="hidden" name="next" value="/dashboard/"/>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(".deactivate_account").on("click", function() {
+            var r = confirm("Are you sure you want to deactivate your account?");
+            var id = $(this).attr("user-id");
+            if (r == true) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/deactivate_account/" + id + "/",
+                    success: function (r) {
+
+                        location.reload();
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            } else {
+                console.log("cancel");
+            }
+        });
+    </script>
+
+{% endblock %}

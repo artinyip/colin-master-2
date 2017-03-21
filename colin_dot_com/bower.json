@@ -1,0 +1,14 @@
+{
+  "name": "colin",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": "^2.2.x",
+    "foundation": "^5.5.3",
+    "angular-dropzone": "^0.1.2",
+    "ng-dropzone": "ngdropzone#^2.0.2",
+    "tether-drop": "^1.4.2",
+    "angular-inview": "^2.2.0",
+    "angular-shapeshift": "^1.0.0",
+    "angular-masonry": "^0.16.0"
+  }
+}

@@ -1,0 +1,62 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% load widget_tweaks %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div class="rowset">
+    <div class="row errors">
+            {% if user_form.errors or desinger_form.errors %}
+                <div class="small-11 large-5 large-centered small-centered columns">
+                    <div data-closable class="callout alert small">
+                        <h1>Error</h1>
+                        There was a problem signing you up!
+                        {% for error in designer_form.errors %}
+                            {{ error }}
+                        {% endfor %}
+                        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row">
+                <div class="colin_form">
+                    <div class="small-11 large-6 columns colin_form">
+                    	<h1>Congrats! You're invited to join Colin.</h1>
+                    		<h3>
+                    		Welcome designer! You're invited to join the beta of Colin, a curated database representing the best manufacturers in every field, from print to product. The easiest way to discover a vendor for your next project.
+							It's also free.
+                    		</h3>
+                    </div>
+                <div class="small-11 large-5 columns colin_form end">
+                					
+                    <form action="/signup/designer/" method="post" enctype="multipart/form-data" data-parsley-validate>
+                        {% csrf_token %}
+                        {% render_field designer_form.first_name placeholder="First name" %}
+                        {{ designer_form.first_name.errors }}
+
+                        {% render_field designer_form.last_name placeholder="Last name"%}
+                        {{ designer_form.last_name.errors }}
+
+                        {% render_field user_form.username placeholder="Email" %}
+                        {{ user_form.username.errors }}
+
+                        {% render_field user_form.password1 placeholder="Password"%}
+                        {{ user_form.password1.errors }}
+
+                        {% render_field user_form.password2 placeholder="Confirm password"%}
+                        {{ user_form.password2.errors }}
+
+
+                        <input type="submit" class="button fill_width" value="Sign up!" />
+                        <input type="hidden" name="next" value="/signup/thankyou" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

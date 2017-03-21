@@ -1,0 +1,51 @@
+{% extends "colin_dot_com/colin_dot_com.html" %}
+
+{% block navigation %}
+    <ul class="breadcrumbs">
+      <li><a href="/">home</a></li>
+      <li><a class="current" href="/companies">companies</a> </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% if companies %}
+        <div class="rowset">
+        <div class="intro">Hello {% if user.first_name %}<span class="highlight">{{ user.first_name }}</span>{% endif %},<br />
+                Check out some of the latest projects
+                <br /> I think you might be interested in.</div>
+        			<button class="expanded dropdown button filter"><i class="fa fa-filter" aria-hidden="true"></i> Filter by material</button>
+            <div class="row">
+            
+                {% for company in companies %}
+                    {% with company.get_default_image as photo %}
+                        {% if photo %}
+                            <div class="company small-12 large-4 columns">
+                                <a class="company_link" href="/companies/{{ company.id }}">
+                                    <img src = "{{ MEDIA_URL }}/{{ photo.image }}">
+                                    <div class="company_info">
+                                        <div class="company_name">{{ company.name }}</div>
+                                        <div class="company_location">{{ company.city }}, {{company.state}}</div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row" style="display:none">
+            <div class="company_prototype large-4 small-12 columns">
+            </div>
+        </div>
+    {% endif %}
+
+
+    <script type="text/javascript">
+        $(".company").each(function() {
+            var width = $(this).parent().width() / 3;
+            var prototype = $(".company_prototype").width();
+            console.log("computed " + width);
+            console.log("prototype " + prototype);
+        })
+    </script>
+{% endblock %}

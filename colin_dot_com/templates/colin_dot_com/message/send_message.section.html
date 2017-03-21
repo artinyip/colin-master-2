@@ -1,0 +1,40 @@
+                    {% if in_reply_to %}
+                        <form method="post" action="/send_message/?in_reply_to={{ in_reply_to.id }}/" enctype="multipart/form-data">
+                    {% else %}
+                        <form method="post" action="/send_message/" enctype="multipart/form-data">
+                    {% endif %}
+                        {% csrf_token %}
+
+                        <!--
+                        {{ message_form.recipient.label }}
+                        -->
+                        <input type="hidden" name="{{ message_form.recipient.name }}" value="{{ to.id }}">
+                        <h2>
+                            Message to <span class="highlight">{% if to.company %}{{ to.company.name }}{% else %}{{ to.email }} {% endif %}</span> {% if to.city %}<small>({{ to.city }}{% if to.state %}, {{ to.state }}{% endif %}){% endif %}</small>
+						</h2>
+                        {{ message_form.subject.label }}
+                        {%  if in_reply_to %}
+                            <input type="hidden" name="{{ message_form.subject.name}}" value="{{ in_reply_to }}">
+
+                            <div><strong>{{ in_reply_to }}</strong></div>
+                        {%  else %}
+                            {{ message_form.subject }}
+                        {% endif %}
+
+                        {{ message_form.body.label }}
+                        {{ message_form.body }}
+
+                        {% if in_reply_to %}
+                            <p>In reply to: {{ in_reply_to }}</p>
+                        {% endif %}
+
+                            <div class="individual-form">
+                                {{ message_attachment_form.as_p }}
+                            </div>
+
+
+
+                            <input type="submit" class="button fill_width" value="Send message" />
+                            <input type="hidden" name="next" value="/signup/thankyou" />
+                        </div>
+                   </form>

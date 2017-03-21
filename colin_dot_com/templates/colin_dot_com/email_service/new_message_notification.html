@@ -1,0 +1,20 @@
+{% extends "colin_dot_com/email_service/base_colin_email.html" %}
+
+{% block content %}
+    <h3 style="font-size: 215%; font-weight:bold; margin: 1em auto; line-height:1em; letter-spacing:-.02em">{{ message.get_sender_name }}<br>sent you a new message.</h3>
+
+    <!--
+    <h3 style="font-size: 125%; font-weight:bold; margin: 1em auto;">Hello <span style="color:#FDBB11;">{{ message.get_recipient_name }}</span>,</h3>
+    <h5 style="font-size: 115%; color:#3c3c3c; margin: 1em auto;">You've received a new message from <span style="color:#FDBB11;">{{ message.get_sender_name }}</span>:</h5>
+    -->
+    <blockquote style="padding: 20px; margin: 0">
+        <p style="font-weight:bold; font-size: 125%">
+        {{ message.subject }}
+        </p>
+        <p style="font-size: 90%; line-height:24px">
+            {{ message.body }}
+        </p>
+        <p style="text-align:right; color: #3c3c3c; font-size:75%; font-style: italic; margin-bottom: 0; padding-bottom:0">{{ message.date_sent }}</p>
+        <button style="background:#222222; border:0; color:#ffffff; padding:12px; font-weight:bold; font-size:90%; border-radius:10px; margin: 1em auto">Reply to {{ message.get_sender_name }}</button>
+        </blockquote>
+{% endblock %}
